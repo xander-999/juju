@@ -51,6 +51,7 @@ local TEXT_BOUND_PARAMS = Instance.new("GetTextBoundsParams")
 TEXT_BOUND_PARAMS["Width"] = math.huge
 
 local FROM_OFFSET = UDim2["fromOffset"]
+local DEFER = task["defer"]
 
 local GET_TEXT_BOUNDS_ASYNC = TEXT_SERVICE.GetTextBoundsAsync
 
@@ -179,12 +180,12 @@ export type DrawingText = DrawingBase & {
     TextBounds: Vector2,
     Size: number,
     Font: number,
-    Centered: boolean,
+    Center: boolean,
     Outline: boolean,
     OutlineColor: Color3,
     Position: Vector2
 }
-type text_property = less_generic_base_property | "Text" | "TextBounds" | "Size" | "Font" | "Centered" |
+type text_property = less_generic_base_property | "Text" | "TextBounds" | "Size" | "Font" | "Center" |
     "Outline" | "OutlineColor" | "Position"
 export type DrawingImage = DrawingBase & {
     Data: string,
@@ -370,7 +371,7 @@ local text_proxy_metatable = {
             drawing[key] = value
             instance.FontFace = Drawing.Font._font_list[value]
             UPDATE_TEXT_BOUNDS(drawing)
-        elseif key == "Centered" then
+        elseif key == "Center" then
             drawing[key] = value
             instance.TextXAlignment =
                 if value then
@@ -421,7 +422,9 @@ local image_proxy_metatable = {
 
         elseif key == "Data" then
             drawing[key] = value
-            instance.Image = getAsset(value)
+            DEFER(function()
+                instance.Image = getAsset(value)
+            end)
         -- elseif key == "ImageSize" then -- PROD1
         --     error("ImageSize is read-only") -- PROD1
         elseif key == "Size" then
@@ -798,7 +801,7 @@ Drawing = {
             TextBounds = VECTOR2_ZERO,
             Size = 12,
             Font = 1,
-            Centered = false,
+            Center = false,
             Outline = false,
             OutlineColor = COLOR_BLACK,
             Position = VECTOR2_ZERO,

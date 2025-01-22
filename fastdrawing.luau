@@ -519,6 +519,12 @@ local circle_proxy_metatable = {
             drawing[key] = value
             local radius = drawing.Radius
             instance.Position = FROM_OFFSET(value.X - radius, value.Y - radius)
+        elseif key == "Visible" then
+            instance.Visible = value
+            drawing[key] = value
+        elseif key == "ZIndex" then
+            instance.ZIndex = value
+            drawing[key] = value
         end
     end
 }

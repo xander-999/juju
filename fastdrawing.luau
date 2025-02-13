@@ -100,14 +100,19 @@ end
 -- end -- PROD1
 
 local data_asset_map: { [string]: string } = {}
+local WAIT = task["wait"]
 local function getAsset(data: string, append: (".txt" | ".ttf")?): string
     local result = data_asset_map[data]
     if not result then
         local file = "asset" .. tick() .. (append or ".txt")
+        data_asset_map[data] = ""
+
         writefile(file, data)
         result = getcustomasset(file)
         delfile(file)
         data_asset_map[data] = result
+    elseif result == "" then
+        repeat WAIT() until data_asset_map[data] ~= ""
     end
     return result
 end

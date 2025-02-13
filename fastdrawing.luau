@@ -113,6 +113,7 @@ local function getAsset(data: string, append: (".txt" | ".ttf")?): string
         data_asset_map[data] = result
     elseif result == "" then
         repeat WAIT() until data_asset_map[data] ~= ""
+        result = data_asset_map[data]
     end
     return result
 end

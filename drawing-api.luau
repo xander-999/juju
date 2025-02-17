@@ -1033,7 +1033,7 @@ Drawing.Font.new("C", "AAEAAAAVAQAABABQRFNJR699sFcACcR8AAAblEdERUb5TADqAAj4DAAAA
               object:Remove()
           end
       end
-      Drawing._ROOT:Destroy()
+      Drawing.__ROOT:Destroy()
   end
 
 return Drawing

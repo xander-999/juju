@@ -6,4 +6,10 @@ if executor == "Solara" or executor == "Xeno" or executor == "Delta" or executor
 end
 
 local id = game["GameId"]
-loadstring(game:HttpGet(id == 1008451066 and "https://api.luarmor.net/files/v3/loaders/ddb9688b49c85c6e994df475d70b39fd.lua" or "https://api.luarmor.net/files/v3/loaders/2a8c8683321da8ea22f9a1cb1722eccc.lua"))()
+
+if id == 1008451066 then
+    game:GetService("Players")["LocalPlayer"]:Kick("[juju]\nthe da hood script is currently down for updates.")
+    return
+end
+
+loadstring(game:HttpGet(--[[id == 1008451066 and "https://api.luarmor.net/files/v3/loaders/ddb9688b49c85c6e994df475d70b39fd.lua" or--]]"https://api.luarmor.net/files/v3/loaders/2a8c8683321da8ea22f9a1cb1722eccc.lua"))()
